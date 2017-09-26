@@ -1,0 +1,26 @@
+{
+    "schema": {
+        "spotify": {
+            "type": "object",
+            "title": "Spotify Settings",
+            "properties": {
+                "appSecret": {
+                    "type": "string",
+                    "title": "Base54 encoded app id and secret"
+                },
+                "refreshKey": {
+                    "type": "string",
+                    "title": "Spotify refresh key"
+                }
+            }
+        }
+    },
+    "form": [
+        {
+            "type": "fieldset",
+            "key": "spotify",
+            "expandable": true,
+            "order":0
+        }
+    ]
+}
