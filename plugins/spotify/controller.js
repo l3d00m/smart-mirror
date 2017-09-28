@@ -1,5 +1,6 @@
 function Spotify($scope, SpotifyService, SpeechService, $interval) {
-    var spotifyUpdater = function () {
+
+    var updateSpotifyInfo = function () {
         SpotifyService.getPlaying().then(function (item) {
             $scope.spotify = item.item.name + " - " + item.item.artists[0].name;
         }, function (error) {
@@ -7,7 +8,9 @@ function Spotify($scope, SpotifyService, SpeechService, $interval) {
         });
     };
 
-    $interval(spotifyUpdater, 2000)
+    if(typeof config.spotify != 'undefined' && config.spotify.length){
+        $interval(updateSpotifyInfo, 2000);
+    }
 
 }
 
