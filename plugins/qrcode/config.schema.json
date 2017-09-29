@@ -15,6 +15,7 @@
         "method": {
           "type": "string",
           "enum": [
+            "",
             "WEP",
             "WPA",
             "nopass"

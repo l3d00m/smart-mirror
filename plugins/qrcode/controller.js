@@ -36,7 +36,7 @@ function QRcode($scope, SpeechService, Focus) {
 		Focus.change("remote");
 	}
 
-	if (config.qrcode) {
+	if (typeof config.qrcode != "undefined") {
 		SpeechService.addCommand('show_wifiQR', function () {
 			showWifiQR()
 		});
