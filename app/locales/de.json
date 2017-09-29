@@ -189,6 +189,11 @@
             "text": "Schalte (das|die) Licht(er) (action)",
             "voice": "(Schalte) (das) (die) Licht(er) *action",
             "description": "Steuert Farbe und Helligkeit von Lichtern."
+        },
+        "show_wifiQR":{
+          "text": "Zeige WLAN Zugangsdaten",
+          "voice": "Zeig(e) (mein) wlan (QR code) (QR) (passwort) (name) (zugangsdaten)",
+          "description": "Zeigt Wlan-Zugangsdaten mit optionalem QR-Code"
         }
     },
     "fitbit": {
