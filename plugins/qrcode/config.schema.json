@@ -1,0 +1,35 @@
+{
+  "schema": {
+    "qrcode": {
+      "type": "object",
+      "title": "WiFi password",
+      "properties": {
+        "ssid": {
+          "type": "string",
+          "title": "WiFi name (SSID)"
+        },
+        "password": {
+          "type": "string",
+          "title": "WiFi password"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "WEP",
+            "WPA",
+            "nopass"
+          ],
+          "title": "Method of authentication"
+        }
+      }
+    }
+  },
+  "form": [
+    {
+      "type": "fieldset",
+      "key": "qrcode",
+      "expandable": true,
+      "order":0
+    }
+  ]
+}

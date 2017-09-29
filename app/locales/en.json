@@ -210,6 +210,11 @@
             "voice": "Show remote (QR code) (QR) (link)",
             "description": "Show the local IP of the Remote App URL"
         },
+        "show_wifiQR":{
+            "text": "Show WiFi password",
+            "voice": "Show (my) wifi (QR code) (QR) (password) (name)",
+            "description": "Show your WiFi password and a QR code"
+        },
         "todoist_show": {
             "text": "Show (my) ________ list",
             "voice": "Show (my) *project list",
