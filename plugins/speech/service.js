@@ -52,6 +52,11 @@ const {ipcRenderer} = require('electron');
 				callbacks.listening(false)
 			})
 
+			ipcRenderer.on('error', (event, text) => {
+				callbacks.error(text)
+				callbacks.listening(false)
+			})
+
 		}
 
         // Ensure callback is a valid function

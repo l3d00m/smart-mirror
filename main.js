@@ -96,6 +96,7 @@ if (config && config.speech && !firstRun) {
 		} else if (message.startsWith('!f:')) {
 			mainWindow.webContents.send('final-results', message.substring(4))
 		} else {
+			mainWindow.webContents.send('error', message.substring(3))
 			console.error(message.substring(3))
 		}
 	})
