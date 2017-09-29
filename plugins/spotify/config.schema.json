@@ -8,9 +8,12 @@
                     "type": "string",
                     "title": "Base54 encoded app id and secret"
                 },
-                "refreshKey": {
-                    "type": "string",
-                    "title": "Spotify refresh key"
+                "refreshKeys": {
+                    "type": "array",
+                    "title": "Spotify refresh keys",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         }
