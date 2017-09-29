@@ -8,6 +8,7 @@ function Spotify($scope, SpotifyService, SpeechService, $interval, Focus) {
 			SpotifyService.getPlaying(key).then(function (item) {
 				if(item.device.name == 'Küche' && item.device.is_active && item.is_playing) {
 					$scope.spotify = item.item.name + " - " + item.item.artists[0].name;
+					$scope.albumCover = item.item.album.images[1].url;
 					isPlaying[refreshKeys.indexOf(key)] = true;
 				}
 				else {

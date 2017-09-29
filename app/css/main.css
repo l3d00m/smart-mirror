@@ -537,6 +537,10 @@ ul.calendar {
     max-width: 100%;
 }
 
+.spotifyImage {
+    max-width: 100%;
+}
+
 .news {
     height: 75px;
     margin-bottom: 5px;
