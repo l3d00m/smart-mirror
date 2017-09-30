@@ -1,7 +1,8 @@
 <div ng-controller="Spotify">
     <div class="spotifyContainer animate-grow" ng-show="showSpotify">
         <img class="spotifyImage animate-grow" src="{{albumCover}}"/>
-        <h3 ng-controller="Spotify" ng-bind="spotify" ng-cloak></h3>
+        <div class="spotifyTitle" ng-controller="Spotify" ng-bind="spotifyTitle" ng-cloak></div>
+        <div class="spotifyArtist" ng-controller="Spotify" ng-bind="spotifyArtist" ng-cloak></div>
     </div>
 </div>
 
