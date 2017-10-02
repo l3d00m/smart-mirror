@@ -5,8 +5,7 @@
 
 		service.getPlaying = function (key) {
 			var deferred = $q.defer();
-			service.getAccessToken(key).then(function (response) {
-				var token = response.access_token;
+			service.getAccessToken(key).then(function (token) {
 				var req = {
 					method: 'GET',
 					url: 'https://api.spotify.com/v1/me/player',
@@ -33,7 +32,7 @@
 				data: $httpParamSerializer({'grant_type': "refresh_token", 'refresh_token': key})
 			};
 			$http(req).then(function (response) {
-				deferred.resolve(response.data);
+				deferred.resolve(response.data.access_token);
 			});
 			return deferred.promise;
 		}

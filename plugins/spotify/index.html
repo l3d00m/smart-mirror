@@ -1,10 +1,16 @@
 <div ng-controller="Spotify">
     <div class="spotifyContainer animate-grow" ng-show="showSpotify">
-        <img class="spotifyImage animate-grow" src="{{albumCover}}"/>
+        <div><img class="spotifyImage animate-grow" src="{{albumCover}}"/></div>
+        <div class="spotifyProgressContainer">
+            <div class="spotifyProgressTime" ng-bind="spotifyCurrentProgress"></div>
+            <div class="spotifyProgressDuration" ng-bind="spotifyDuration"></div>
+            <div class="spotifyProgressBar">
+                <progress max="1000" ng-value="spotifyProgressBar" style="width: 100%"></progress>
+            </div>
+        </div>
         <div class="spotifyTitle" ng-controller="Spotify" ng-bind="spotifyTitle" ng-cloak></div>
         <div class="spotifyArtist" ng-controller="Spotify" ng-bind="spotifyArtist" ng-cloak></div>
     </div>
-</div>
 
 
 
