@@ -47,7 +47,7 @@
   <div class="container" ng-class="(listening == true)?'listening':'not-listening'">
     <div class="middle-center">
       <h1 ng-controller="Greeting" ng-bind="greeting" ng-cloak></h1>
-      <div ng-include="'plugins/remote/index.html'"></div>
+      <div ng-include="'plugins/qrcode/index.html'"></div>
       <div ng-include="'plugins/soundcloud/index.html'"></div>
       <div ng-include="'plugins/map/index.html'"></div>
       <div ng-include="'plugins/xkcd/index.html'"></div>
@@ -137,7 +137,7 @@
   <script src="plugins/greeting/controller.js"></script>
   <script src="plugins/weather/controller.js"></script>
   <script src="plugins/calendar/controller.js"></script>
-  <script src="plugins/remote/controller.js"></script>
+  <script src="plugins/qrcode/controller.js"></script>
   <script src="plugins/maker/controller.js"></script>
   <script src="plugins/todoist/controller.js"></script>
   <script src="plugins/ha-display/controller.js"></script>

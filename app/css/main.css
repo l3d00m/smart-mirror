@@ -533,7 +533,8 @@ ul.calendar {
 }
 
 .qrImage {
-    -webkit-filter: invert(100%);
+    /* Does look better with inversion, but detection is better without
+    -webkit-filter: invert(100%);*/
     max-width: 100%;
 }
 
