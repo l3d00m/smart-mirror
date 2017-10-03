@@ -67,6 +67,7 @@
 				if (error.error == "network") {
 					$scope.speechError = "Google Speech Recognizer: Network Error (Speech quota exceeded?)";
 				}
+				resetCommandTimeout = $timeout(restCommand, 10000);
 			}
 		});
 
