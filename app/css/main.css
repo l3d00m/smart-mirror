@@ -537,6 +537,47 @@ ul.calendar {
     max-width: 100%;
 }
 
+.spotifyImage {
+    max-width: 100%;
+    filter: grayscale(100%);
+}
+
+.spotifyProgressContainer {
+    width: 300px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+.spotifyProgressTime {
+    display: inline-block;
+    float: left;
+    padding-right: 7px;
+}
+
+.spotifyProgressDuration {
+    display: inline-block;
+    float: right;
+    padding-left: 7px;
+}
+
+.spotifyProgressBar {
+    overflow:hidden;
+}
+
+.spotifyTitle, .spotifyArtist, .spotifyProgressTime, .spotifyProgressDuration{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.spotifyTitle {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.spotifyArtist {
+    font-size: 16px;
+}
+
 .news {
     height: 75px;
     margin-bottom: 5px;
