@@ -224,6 +224,21 @@
             "text": "Entferne ________ von (meiner) ________ Liste",
             "voice": "Entferne *element von (meiner) *project()liste",
             "description": "Entfernt ein Element von der Todoist-Liste."
+        },
+        "spotify_pause": {
+            "text": "Stoppe die Wiedergabe",
+            "voice": "(Stoppe) (Stop) (Stopp) (Pausiere) (die) (den)(Wiedergabe) (Song) (Track) (Titel) (Musik)",
+            "description": "Stoppt die Spotify Musikwiedergabe."
+        },
+        "spotify_next_track": {
+            "text": "Spiele den nächsten Song",
+            "voice": "Spiele (den) (die) nächste(n) (Song) (Track) (Titel) (Musik)",
+            "description": "Spielt den nächsten Song auf Spotify."
+        },
+        "spotify_previous_track": {
+            "text": "Spiele den vorherigen Song",
+            "voice": "Spiele (den) (die) vorherige(n) (Song) (Track) (Titel) (Musik)",
+            "description": "Spielt den vorherigen Song auf Spotify."
         }
     },
     "fitbit": {
