@@ -229,6 +229,21 @@
             "text": "Remove ________ from (my) ________ list",
             "voice": "Remove *element from (my) *project list",
             "description": "Remove item from requested list."
+        },
+        "spotify_pause": {
+            "text": "Stop playback",
+            "voice": "(Stop) (Pause) playback",
+            "description": "Pauses the spotify playback."
+        },
+        "spotify_next_track": {
+            "text": "Play next song",
+            "voice": "Play (the) pnext (track) (song)",
+            "description": "Plays the next song on spotify."
+        },
+        "spotify_previous_track": {
+            "text": "Play previous song",
+            "voice": "Play (the) previous (track) (song)",
+            "description": "Plays the previous song on spotify."
         }
     },
     "fitbit": {

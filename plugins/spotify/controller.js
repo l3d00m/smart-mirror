@@ -4,6 +4,24 @@ function Spotify($scope, SpotifyService, SpeechService, $timeout) {
 	var refreshKeys = config.spotify.refreshKeys;
 	var updateProgressTimeout;
 
+	// Pause playback
+	SpeechService.addCommand('spotify_pause', function () {
+		console.debug("Pause spotify playback");
+		SpotifyService.pausePlayback(refreshKeys[currentPlaying]);
+	});
+
+	// Play next track
+	SpeechService.addCommand('spotify_next_track', function () {
+		console.debug("Spotify play next track");
+		SpotifyService.playNext(refreshKeys[currentPlaying]);
+	});
+
+	// Play previous track
+	SpeechService.addCommand('spotify_previous_track', function () {
+		console.debug("Spotify play previous track");
+		SpotifyService.playPrevious(refreshKeys[currentPlaying]);
+	});
+
 	var updateSpotifyInterval = function () {
 		if (currentPlaying >= 0) {
 			// We already know which account is currently streaming
@@ -18,7 +36,7 @@ function Spotify($scope, SpotifyService, SpeechService, $timeout) {
 				processSingleSpotifyAccount(key);
 			});
 			// Request the API less often to save bandwidth and avoid rate limiting
-			$timeout(updateSpotifyInterval, 10000);
+			$timeout(updateSpotifyInterval, 5000);
 		}
 	};
 
