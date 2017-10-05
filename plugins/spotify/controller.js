@@ -1,60 +1,75 @@
 function Spotify($scope, SpotifyService, SpeechService, $timeout) {
 
-	var currentPlaying = -1;
-	var refreshKeys = config.spotify.refreshKeys;
+	var refreshKeys;
 	var updateProgressTimeout;
+	var sessionToken = -1;
+	var tokenExpireDate = -1;
+
+	//TODO: set Time based on response and delete this const
+	const expireIn = 3600;
 
 	// Pause playback
 	SpeechService.addCommand('spotify_pause', function () {
 		console.debug("Pause spotify playback");
-		SpotifyService.pausePlayback(refreshKeys[currentPlaying]);
+		SpotifyService.pausePlayback(sessionToken);
 	});
 
 	// Play next track
 	SpeechService.addCommand('spotify_next_track', function () {
 		console.debug("Spotify play next track");
-		SpotifyService.playNext(refreshKeys[currentPlaying]);
+		SpotifyService.playNext(sessionToken);
 	});
 
 	// Play previous track
 	SpeechService.addCommand('spotify_previous_track', function () {
 		console.debug("Spotify play previous track");
-		SpotifyService.playPrevious(refreshKeys[currentPlaying]);
+		SpotifyService.playPrevious(sessionToken);
 	});
 
 	var updateSpotifyInterval = function () {
-		if (currentPlaying >= 0) {
+		if (sessionToken != -1 && (tokenExpireDate - new Date()) >= 0) {
 			// We already know which account is currently streaming
 			// So fetch this account
-			processSingleSpotifyAccount(refreshKeys[currentPlaying]);
+			processSingleSpotifyAccount(sessionToken);
 			// Fetch the API more often to make faster updates if the playing state changes
 			$timeout(updateSpotifyInterval, 1500);
 		} else {
-			// Either there's no account streaming or we don't know which one,
-			// so iterate through all accounts
+			// In cases that there's no account streaming, we don't know which or the Token is expired
+			// so iterate through all account and refresh the Access Tokens
 			refreshKeys.forEach(function (key) {
-				processSingleSpotifyAccount(key);
+				SpotifyService.getAccessToken(key).then(function (token) {
+					processSingleSpotifyAccount(token);
+				});
 			});
 			// Request the API less often to save bandwidth and avoid rate limiting
 			$timeout(updateSpotifyInterval, 5000);
 		}
 	};
 
-	var processSingleSpotifyAccount = function (key) {
-		SpotifyService.getPlaying(key).then(function (item) {
+	var processSingleSpotifyAccount = function (token) {
+		SpotifyService.getPlaying(token).then(function (item) {
 			if (item.device.name === 'Küche' && item.device.is_active && item.is_playing) {
-				// Update isPlaying state
-				currentPlaying = refreshKeys.indexOf(key);
+				// Update sessionToken
+				if(sessionToken != token)
+				{
+					//session changed
+					sessionToken = token;
+					tokenExpireDate = new Date();
+					tokenExpireDate.setSeconds( tokenExpireDate.getSeconds() + expireIn*0.9);
+				}
 				updatePlayerView(item);
-			} else if (currentPlaying === refreshKeys.indexOf(key)) {
+			} else if (sessionToken === token) {
 				// The playback on this account has now stopped
 				$scope.showSpotify = false;
-				currentPlaying = -1;
+				sessionToken = -1;
 			} else {
 				// This account is currently not streaming to the device
 			}
 		}, function (error) {
-			$scope.spotify = {error: error};
+			if(error.status === 401) {
+				$scope.showSpotify = false;
+				sessionToken = -1;
+			}
 		});
 	};
 
@@ -114,7 +129,8 @@ function Spotify($scope, SpotifyService, SpeechService, $timeout) {
 	};
 
 	// Start the loading if config is set
-	if (typeof config.spotify.refreshKeys !== 'undefined' && refreshKeys.length) {
+	if (typeof config.spotify !== 'undefined') {
+		refreshKeys = config.spotify.refreshKeys;
 		updateSpotifyInterval();
 	}
 
