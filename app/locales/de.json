@@ -225,6 +225,11 @@
             "voice": "Entferne *element von (meiner) *project()liste",
             "description": "Entfernt ein Element von der Todoist-Liste."
         },
+        "show_wifiQR": {
+            "text": "Zeige WLAN Zugangsdaten",
+            "voice": "Zeig(e) (mein) wlan (QR code) (QR) (passwort) (name) (zugangsdaten)",
+            "description": "Zeigt Wlan-Zugangsdaten mit optionalem QR-Code"
+        },
         "spotify_pause": {
             "text": "Stoppe die Wiedergabe",
             "voice": "(Stoppe) (Stop) (Stopp) (Pausiere) (die) (den)(Wiedergabe) (Song) (Track) (Titel) (Musik)",
