@@ -8,9 +8,8 @@ function Humidity($scope, $timeout) {
 	var updateInfoIntervall = function() {
 		sensor.read(config.humidity.sensorType, config.humidity.pin, function(err, temperature, humidity) {
 			if(!err) {
-				console.log('temp: ' + temperature.toFixed(1) + '°C, ' +
-					'humidity: ' + humidity.toFixed(1) + '%'
-				);
+				$scope.temperatureValue = temperature.toFxed(1) + '°C';
+				$scope.humidityValue = humidity.toFixed(1) + '%';
 			}
 		});
 		$timeout(updateInfoIntervall, 5000);
