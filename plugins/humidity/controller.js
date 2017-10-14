@@ -6,7 +6,7 @@ function Humidity($scope, $timeout) {
 	var sensor = require('node-dht-sensor');
 
 	var updateInfoIntervall = function() {
-		sensor.read(22, 4, function(err, temperature, humidity) {
+		sensor.read(config.humidity.sensorType, config.humidity.pin, function(err, temperature, humidity) {
 			if(!err) {
 				console.log('temp: ' + temperature.toFixed(1) + '°C, ' +
 					'humidity: ' + humidity.toFixed(1) + '%'
