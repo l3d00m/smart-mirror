@@ -595,7 +595,7 @@ ul.calendar {
     margin-bottom: 55px;
 }
 
-.humidityLabel, .humidityValue {
+.humidityLabel, .humidityValue, .temperatureValue {
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     font-weight: 300;
@@ -605,13 +605,6 @@ ul.calendar {
     margin-right: 13px;
 }
 
-.humidityLabel {
-    width: 170px;
-    float: left;
-    text-align: left;
-}
-
-.humidityValue {
-    width: 60px;
-    text-align: left;
+.humidityValue, .temperatureValue {
+    margin-left: 10px;
 }
