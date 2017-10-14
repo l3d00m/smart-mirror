@@ -1,4 +1,4 @@
 <div ng-controller="Humidity">
-    <div class="spotifyTitle" ng-controller="Spotify" ng-bind="temperatureValue" ng-cloak></div>
-    <div class="spotifyTitle" ng-controller="Spotify" ng-bind="humidityValue" ng-cloak></div>
+    <div class="temperature temperature-max" ng-controller="Spotify" ng-bind="temperatureValue + '&deg;C'" ng-cloak></div>
+    <div class="temperature temperature-max" ng-controller="Spotify" ng-bind="humidityValue + '%'" ng-cloak></div>
 </div>
