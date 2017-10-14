@@ -594,3 +594,24 @@ ul.calendar {
     font-size: 20px;
     margin-bottom: 55px;
 }
+
+.humidityLabel, .humidityValue {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.humidity {
+    margin-right: 13px;
+}
+
+.humidityLabel {
+    width: 170px;
+    float: left;
+    text-align: left;
+}
+
+.humidityValue {
+    width: 60px;
+    text-align: left;
+}

@@ -3,7 +3,12 @@
  */
 function Humidity($scope, $timeout) {
 
-	var sensor = require('node-dht-sensor');
+	try{
+		var sensor = require('node-dht-sensor');
+	}
+	catch (err) {
+		console.log("node-dht-sensor module not installed")
+	}
 
 	var updateInfoIntervall = function() {
 		sensor.read(config.humidity.sensorType, config.humidity.pin, function(err, temperature, humidity) {
@@ -15,8 +20,12 @@ function Humidity($scope, $timeout) {
 		$timeout(updateInfoIntervall, 5000);
 	}
 
-	if (typeof config.humidity !== 'undefined' && typeof config.humidity.pin === 'number') {
+	if (typeof config.humidity !== 'undefined' && typeof config.humidity.pin === 'number' && typeof sensor != "undefined") {
 		updateInfoIntervall();
+	}
+	else {
+		$scope.temperatureValue = 21.1;
+		$scope.humidityValue = 64.8;
 	}
 
 }
