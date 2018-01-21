@@ -1,0 +1,30 @@
+{
+  "schema": {
+    "humidity": {
+      "type": "object",
+      "title": "Humiditiy Settings",
+      "properties": {
+        "pin": {
+          "type": "integer",
+          "title": "Number of the pin which is used for connection"
+        },
+        "sensorType": {
+          "type": "integer",
+          "title": "Type of DHT Sensor",
+          "enum" : [
+            22,
+            11
+          ]
+        }
+      }
+    }
+  },
+  "form": [
+    {
+      "type": "fieldset",
+      "key": "humidity",
+      "expandable": true,
+      "order":0
+    }
+  ]
+}

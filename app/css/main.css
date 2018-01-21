@@ -595,3 +595,17 @@ ul.calendar {
     font-size: 20px;
     margin-bottom: 55px;
 }
+
+.humidityLabel, .humidityValue, .temperatureValue {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.humidity {
+    margin-right: 13px;
+}
+
+.humidityValue, .temperatureValue {
+    margin-left: 10px;
+}
