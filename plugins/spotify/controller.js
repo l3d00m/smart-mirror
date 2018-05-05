@@ -3,10 +3,8 @@ function Spotify($scope, SpotifyService, SpeechService, $timeout) {
 	var refreshKeys;
 	var updateProgressTimeout;
 	var sessionToken = -1;
-	var tokenExpireDate = -1;
-
-	//TODO: set Time based on response and delete this const
-	const expireIn = 3600;
+	let accessTokens = [];
+	let rateLimitEpoch = 0;
 
 	// Pause playback
 	SpeechService.addCommand('spotify_pause', function () {
@@ -26,63 +24,79 @@ function Spotify($scope, SpotifyService, SpeechService, $timeout) {
 		SpotifyService.playPrevious(sessionToken);
 	});
 
-	var updateSpotifyInterval = function () {
-		if (sessionToken != -1 && (tokenExpireDate - new Date()) >= 0) {
-			// We already know which account is currently streaming
-			// So fetch this account
-			processSingleSpotifyAccount(sessionToken);
-			// Fetch the API more often to make faster updates if the playing state changes
-			$timeout(updateSpotifyInterval, 1500);
-		} else {
-			// In cases that there's no account streaming, we don't know which or the Token is expired
-			// so iterate through all account and refresh the Access Tokens
-			refreshKeys.forEach(function (key) {
-				SpotifyService.getAccessToken(key).then(function (token) {
-					processSingleSpotifyAccount(token);
-				});
+	var refreshApiKeys = function (refreshKey) {
+		// noinspection JSUnresolvedFunction
+		return SpotifyService.getAccessToken(refreshKey)
+			.then(function (data) {
+				accessTokens[refreshKey].accessToken = data['access_token'];
+				accessTokens[refreshKey].tokenExpirationEpoch = (new Date().getTime() / 1000) + data['expires_in'];
+				console.log('Refreshed token. It now expires in ' + Math.floor(accessTokens[refreshKey].tokenExpirationEpoch - new Date().getTime() / 1000) + ' seconds!');
+			}, function (err) {
+				console.log('Could not refresh the token!', err.message);
 			});
-			// Request the API less often to save bandwidth and avoid rate limiting
-			$timeout(updateSpotifyInterval, 5000);
-		}
-	};
+	}
 
-	var processSingleSpotifyAccount = function (token) {
-		SpotifyService.getPlaying(token).then(function (item) {
-			if (item.device.name === 'Küche' && item.device.is_active && item.is_playing) {
-				// Update sessionToken
-				if(sessionToken != token)
-				{
-					//session changed
-					sessionToken = token;
-					tokenExpireDate = new Date();
-					tokenExpireDate.setSeconds( tokenExpireDate.getSeconds() + expireIn*0.9);
-				}
-				updatePlayerView(item);
-			} else if (sessionToken === token) {
-				// The playback on this account has now stopped
-				$scope.showSpotify = false;
-				sessionToken = -1;
-			} else {
-				// This account is currently not streaming to the device
-			}
-		}, function (error) {
-			if(error.status === 401) {
-				$scope.showSpotify = false;
-				sessionToken = -1;
+	var updateSpotifyInterval = function () {
+
+		if ((rateLimitEpoch - new Date().getTime() / 1000) > 0) {
+			$scope.showSpotify = false;
+			console.log("Rate limited, waiting for " + (rateLimitEpoch - new Date().getTime() / 1000) + " seconds");
+			return;
+		}
+
+		var actions = refreshKeys.map((key) => {
+
+			if ( accessTokens[key].accessToken === undefined || (accessTokens[key].tokenExpirationEpoch - new Date().getTime() / 1000) < 60) {
+				return refreshApiKeys(key).then( () => {
+					return SpotifyService.getPlaying(accessTokens[key].accessToken);
+				});
+			}else {
+				return SpotifyService.getPlaying(accessTokens[key].accessToken);
 			}
 		});
+
+		var results = Promise.all(actions);
+
+		results.then(data => {
+			let currentPlaying;
+			data.forEach(function (singleData) {
+				if(singleData.data['is_playing'] !== undefined && config.spotify.Rooms.indexOf(singleData.data['device'].name) !== -1) {
+					currentPlaying = singleData;
+				}
+			});
+
+			if (currentPlaying !== undefined) {
+				updatePlayerView(currentPlaying);
+			}
+			else {
+				$scope.showSpotify = false;
+				console.log("Playback is stopped");
+			}
+
+		})
+			.catch(err => {
+				$scope.showSpotify = false;
+				console.log(err);
+			});
+
+		$timeout(updateSpotifyInterval, 5000);
 	};
+
 
 	var updatePlayerView = function (item) {
 		// Cancel current progress bar runner
 		$timeout.cancel(updateProgressTimeout);
 
+		if (item.status === 429) {
+			// Rate limited
+			rateLimitEpoch = (new Date().getTime() / 1000) + item.headers["Retry-After"] + 5;
+		}
 		// Generify the needed response items
-		var title = item.item.name;
-		var artist = item.item.artists[0].name;
-		var cover_url = item.item.album.images[1].url;
-		var progress = item.progress_ms;
-		var duration = item.item.duration_ms;
+		var title = item.data.item.name;
+		var artist = item.data.item.artists[0].name;
+		var cover_url = item.data.item.album.images[1].url;
+		var progress = item.data.progress_ms;
+		var duration = item.data.item.duration_ms;
 
 		// Add title, artist and cover
 		$scope.spotifyTitle = title;
@@ -131,6 +145,11 @@ function Spotify($scope, SpotifyService, SpeechService, $timeout) {
 	// Start the loading if config is set
 	if (typeof config.spotify !== 'undefined') {
 		refreshKeys = config.spotify.refreshKeys;
+
+		refreshKeys.forEach(function(key){
+			accessTokens[key] = {};
+		});
+
 		updateSpotifyInterval();
 	}
 

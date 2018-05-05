@@ -25,7 +25,7 @@
 		Focus.change("default");
 
 		//set lang
-		if (config.general.language.substr(0, 2) == 'en') {
+		if (config.general.language.substr(0, 2) === 'en') {
 			moment.locale(config.general.language,
 				{
 					calendar: {

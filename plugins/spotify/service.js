@@ -16,7 +16,9 @@
 				data: $httpParamSerializer({'grant_type': "refresh_token", 'refresh_token': refreshKey})
 			};
 			$http(req).then(function (response) {
-				deferred.resolve(response.data.access_token);
+				deferred.resolve(response.data);
+			}, function (error) {
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -43,7 +45,7 @@
 				}
 			};
 			$http(req).then(function (response) {
-				deferred.resolve(response.data);
+				deferred.resolve(response);
 			}, function (error) {
 				handleSpotifyApiError(error);
 				deferred.reject(error);
