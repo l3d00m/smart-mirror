@@ -540,7 +540,7 @@ ul.calendar {
 
 .spotifyImage {
     max-width: 100%;
-    filter: grayscale(100%);
+/*    filter: grayscale(100%);*/
 }
 
 .spotifyProgressContainer {
