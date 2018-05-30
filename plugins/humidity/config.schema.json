@@ -1,20 +1,16 @@
 {
   "schema": {
-    "humidity": {
+    "climate": {
       "type": "object",
-      "title": "Humiditiy Settings",
+      "title": "Climate Settings",
       "properties": {
-        "pin": {
-          "type": "integer",
-          "title": "Number of the pin which is used for connection"
+        "temperatureUri": {
+          "type": "string",
+          "title": "Uri for Temperatur api"
         },
-        "sensorType": {
-          "type": "integer",
-          "title": "Type of DHT Sensor",
-          "enum" : [
-            22,
-            11
-          ]
+        "humidityUri": {
+          "type": "string",
+          "title": "Uri for Humidity api"
         }
       }
     }
@@ -22,7 +18,7 @@
   "form": [
     {
       "type": "fieldset",
-      "key": "humidity",
+      "key": "climate",
       "expandable": true,
       "order":0
     }
