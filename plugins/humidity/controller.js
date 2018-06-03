@@ -1,25 +1,21 @@
 /**
  * Created by nicoo on 14.10.2017.
  */
-function Humidity($scope, $timeout, ClimateService) {
+function Humidity($scope) {
 
-	var updateInfoIntervall = function() {
-
-		ClimateService.getTemperature()
-			.then(data => {
-				$scope.temperatureValue = data.state;
-			});
-
-		ClimateService.getHumidity()
-			.then(data => {
-				$scope.humidityValue = data.state;
-			});
-
-		$timeout(updateInfoIntervall, 5000);
-	}
+	var mqtt = require('mqtt');
 
 	if (typeof config.climate !== 'undefined') {
-		updateInfoIntervall();
+		var client = mqtt.connect(config.climate.uri);
+		client.on('connect', function () {
+			client.subscribe(config.climate.topic);
+		})
+
+		client.on('message', function (topic, message) {
+			message = JSON.parse(message);
+			$scope.temperatureValue = message.temperatur;
+			$scope.humidityValue = message.humidity;
+		});
 	}
 
 }

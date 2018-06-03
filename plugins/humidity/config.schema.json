@@ -4,13 +4,13 @@
       "type": "object",
       "title": "Climate Settings",
       "properties": {
-        "temperatureUri": {
+        "topic": {
           "type": "string",
-          "title": "Uri for Temperatur api"
+          "title": "MQTT Topic for Climate"
         },
-        "humidityUri": {
+        "uri": {
           "type": "string",
-          "title": "Uri for Humidity api"
+          "title": "MQTT URI"
         }
       }
     }
