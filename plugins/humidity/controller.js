@@ -8,14 +8,23 @@ function Humidity($scope) {
 	if (typeof config.climate !== 'undefined') {
 		var client = mqtt.connect(config.climate.uri);
 		client.on('connect', function () {
-			client.subscribe(config.climate.topic);
-		})
+			client.subscribe(config.climate.temperature_topic);
+			client.subscribe(config.climate.humidity_topic);
+		});
 
 		client.on('message', function (topic, message) {
 			message = JSON.parse(message);
-			$scope.temperatureValue = message.temperatur;
-			$scope.humidityValue = message.humidity;
+			if (topic === config.climate.temperature_topic){
+				$scope.temperatureValue = message;
+			}
+			if (topic === config.climate.humidity_topic){
+				$scope.humidityValue = message;
+			}
+
+
 		});
+	} else {
+		console.log("Climate config not set")
 	}
 
 }

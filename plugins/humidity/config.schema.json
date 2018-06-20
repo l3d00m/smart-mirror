@@ -4,13 +4,17 @@
       "type": "object",
       "title": "Climate Settings",
       "properties": {
-        "topic": {
+        "temperature_topic": {
           "type": "string",
-          "title": "MQTT Topic for Climate"
+          "title": "MQTT Topic for temperature (plain text)"
+        },
+        "humidity_topic": {
+          "type": "string",
+          "title": "MQTT Topic for humidity (plain text)"
         },
         "uri": {
           "type": "string",
-          "title": "MQTT URI"
+          "title": "MQTT Host:Port"
         }
       }
     }
